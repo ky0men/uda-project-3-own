@@ -2,7 +2,7 @@ version: 2.1
 
 commands:
   destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    description: Destroy backend and frontend cloudformation stacks given a workflow ID.
     parameters:
       when:
         type: string
@@ -14,10 +14,10 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.id >> --region us-east-1
-            exit 1
+            when: << parameters.when >>
 
   revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.
+    description: Revert migrations
     parameters:
       when:
         type: string
@@ -27,14 +27,14 @@ commands:
       - run:
           name: Revert migrations
           command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
-            if(( $SUCCESS==1 )); 
+            SUCCESS=$(curl --insecure  https://kvdb.io/M8NTh9kT327fA6ombuZZS/migration_<< parameters.workflow_id >>)
+            if (( $SUCCESS == 1 ));
             then
               cd ~/project/backend
               npm install
-              npm run migrations:revert
+              npm run migration:revert
             fi
+            when: << parameters.when >>
 
 jobs:
   build-frontend:
@@ -403,8 +403,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
