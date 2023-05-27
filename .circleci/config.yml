@@ -1,15 +1,5 @@
 version: 2.1
 
-executors:
-  node:
-    executor: node
-  python:
-    docker:
-      - image: python:3.9.0-alpine
-  aws:
-    docker:
-      - image: amazon/aws-cli
-
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -47,7 +37,8 @@ commands:
 
 jobs:
   build-frontend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -64,7 +55,8 @@ jobs:
           key: frontend-build
 
   build-backend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -81,7 +73,8 @@ jobs:
           key: backend-build
 
   test-frontend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -94,7 +87,8 @@ jobs:
             # npm run test
 
   test-backend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -107,7 +101,8 @@ jobs:
             # npm run test
 
   scan-frontend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -122,7 +117,8 @@ jobs:
             # npm audit --audit-level=critical
 
   scan-backend:
-    executor: node
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -137,7 +133,8 @@ jobs:
             # npm audit --audit-level=critical
 
   deploy-infrastructure:
-    executor: aws
+    docker:
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
