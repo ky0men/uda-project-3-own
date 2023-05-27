@@ -12,7 +12,7 @@ commands:
       - run:
           name: Destroy environments
           command: |
-            echo "Destroying environment: << parameters.workflow_id >> "
+            echo "Destroying environment: << parameters.id >> "
             aws cloudformation delete-stack --stack-name "udapeople-backend-<< parameters.id >>"
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<< parameters.id >>"
           when: << parameters.when >>
