@@ -140,6 +140,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Setup - CloudFront Distribution Primer
+          command: |
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name InitialStack\
+            --parameter-overrides WorkflowID=udapeople-001fa97
+      - run:
           name: Ensure back-end infrastructure exists
           command: |
             # aws cloudformation deploy \
