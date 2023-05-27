@@ -145,7 +145,7 @@ jobs:
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack\
-            --parameter-overrides WorkflowID=udapeople-001fa97
+            --parameter-overrides WorkflowID="udapeople-001fa97"
       - run:
           name: Ensure back-end infrastructure exists
           command: |
