@@ -161,6 +161,10 @@ jobs:
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output text >> .circleci/ansible/inventory
             cat .circleci/ansible/inventory
+      - run:
+          name: install gzip
+          command: yum install tar -y
+            yum install gzip -y
       - persist_to_workspace:
           root: ~/
           paths:
