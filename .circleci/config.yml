@@ -228,11 +228,11 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - user: root
       - run:
           name: Install dependencies
           working_directory: /tmp
           command: |
-            yum install -y util-linux
             sudo apt-get install unzip
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
