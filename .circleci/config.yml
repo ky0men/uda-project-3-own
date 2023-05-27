@@ -163,7 +163,7 @@ jobs:
             # cat .circleci/ansible/inventory
       - run:
           name: install gzip
-          command:
+          command: |
             # yum install tar -y
             # yum install gzip -y
       - persist_to_workspace:
