@@ -321,13 +321,13 @@ jobs:
       - run:
           name: Verify SSH host
           command: |
-            cd .circleci/ansible/
-            ls -la
-            cat inventory.txt
-            export BACKEND_IP=$(sed -n '2p' inventory.txt)
-            cd /home/circleci/source
-            ls -la 
-            ssh-keyscan -H ${BACKEND_IP} >> ~/.ssh/known_hosts
+            # cd .circleci/ansible/
+            # ls -la
+            # cat inventory.txt
+            # export BACKEND_IP=$(sed -n '2p' inventory.txt)
+            # cd /home/circleci/source
+            # ls -la 
+            # ssh-keyscan -H ${BACKEND_IP} >> ~/.ssh/known_hosts
       - run:
           name: Deploy backend
           command: |
