@@ -88,13 +88,13 @@ jobs:
             cd ..
             tar -C backend -czvf artifact.tar.gz .
             mkdir --parents /home/circleci/source
-            cp artifact.tar.gz /home/circleci/source/artifact.tar.gz
+            cp artifact.tar.gz /home/circleci/source/
             cd /home/circleci/source/
             ls -la
       - persist_to_workspace:
           root: .
           paths:
-            - /home/circleci/source/artifact.tar.gz
+            - artifact.tar.gz
             - .circleci/ansible/inventory.txt
       - save_cache:
           paths: [backend/node_modules]
