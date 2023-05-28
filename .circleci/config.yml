@@ -269,7 +269,9 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=44.199.167.151
+            cd .circleci/ansible/
+            cat backend-ip.txt
+            export BACKEND_IP=$(cat backend-ip.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
@@ -308,6 +310,7 @@ jobs:
             ansible --version
             pip install awscli
             aws --version
+            npm install pm2
       - run:
           name: Verify SSH host
           command: |
