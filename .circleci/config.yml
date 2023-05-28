@@ -308,9 +308,9 @@ jobs:
       - run:
           name: Verify SSH host
           command: |
-            cd /home/circleci/source
-            ls -la 
-            ssh-keyscan -H 44.199.167.151 >> ~/.ssh/known_hosts
+            # cd /home/circleci/source
+            # ls -la 
+            # ssh-keyscan -H 44.199.167.151 >> ~/.ssh/known_hosts
       - run:
           name: Deploy backend
           command: |
