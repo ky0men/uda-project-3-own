@@ -95,6 +95,7 @@ jobs:
           root: /home/circleci/source
           paths:
             - artifact.tar.gz
+            - .circleci/ansible/inventory.txt
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
