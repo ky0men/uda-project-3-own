@@ -319,6 +319,16 @@ jobs:
             pip install awscli
             aws --version
             npm install pm2
+      - run: 
+          name: Build backend
+          command: |
+            cd backend
+            npm install
+            npm run build
+            cd ..
+            tar -C backend -czvf artifact.tar.gz .
+            pwd
+            ls -la
       - run:
           name: Verify SSH host
           command: |
@@ -326,8 +336,6 @@ jobs:
             ls -la
             cat inventory.txt
             export BACKEND_IP=$(sed -n '2p' inventory.txt)
-            cd /home/circleci/source
-            ls -la 
             echo "BACKEND_IP: $BACKEND_IP"
             ssh-keyscan -H $BACKEND_IP >> ~/.ssh/known_hosts
       - run:
