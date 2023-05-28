@@ -316,9 +316,9 @@ jobs:
       - run:
           name: Verify SSH host
           command: |
-          cd /home/circleci/source
-          ls -la 
-          ssh-keyscan -H 44.199.167.151 >> ~/.ssh/known_hosts
+            cd /home/circleci/source
+            ls -la 
+            ssh-keyscan -H 44.199.167.151 >> ~/.ssh/known_hosts
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
