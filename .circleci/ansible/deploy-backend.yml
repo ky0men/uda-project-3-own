@@ -9,32 +9,34 @@
     - ansible_stdout_callback: yaml
   roles:
     - deploy
-- name: Creates directory
-  become: yes
-  file:
-    path: "/srv/stg"
-    state: "directory"
-    owner: ubuntu
-    group: ubuntu
-    mode: 0755
-
-- name: Copy compressed backend folder
-  copy:
-    src: "/home/circleci/source/artifact.tar.gz"
-    dest: "/srv/stg"
-
-- name: Extract artifact
-  unarchive:
-    src: "/srv/stg/artifact.tar.gz"
-    dest: "/srv/stg"
-    remote_src: yes
-
-- name: Start application
-  command: |
-    cd /srv/stg
-    npm install
-    npm run build
-    pm2 stop default
-    pm2 start npm -- start
-  args:
-    chdir: "/srv/stg"
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES') }}"
+    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
+  task:
+    become: yes
+    file:
+      path: "/srv/stg"
+      state: "directory"
+      owner: ubuntu
+      group: ubuntu
+      mode: 0755
+    copy:
+      src: "/home/circleci/source/artifact.tar.gz"
+      dest: "/srv/stg"
+    unarchive:
+      remote_src: yes
+      src: "/srv/stg/artifact.tar.gz"
+      dest: "/srv/stg"
+    shell:
+      cmd: |
+        cd /srv/stg
+        npm install
+        pm2 stop default
+        pm2 start npm -- start --wait-ready
+        pm2 status
