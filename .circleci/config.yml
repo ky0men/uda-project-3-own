@@ -94,7 +94,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - artifact.tar.gz
+            - /home/circleci/source/artifact.tar.gz
             - .circleci/ansible/inventory.txt
       - save_cache:
           paths: [backend/node_modules]
