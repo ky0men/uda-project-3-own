@@ -307,8 +307,7 @@ jobs:
             tar -C backend -czvf artifact.tar.gz .
             mkdir --parents /home/circleci/source
             cp artifact.tar.gz /home/circleci/source/artifact.tar.gz
-            cd /home/circleci/source/
-            ls -la
+            pwd
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
