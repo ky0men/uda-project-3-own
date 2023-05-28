@@ -91,6 +91,10 @@ jobs:
             cp artifact.tar.gz /home/circleci/source/artifact.tar.gz
             cd /home/circleci/source/
             ls -la
+      - persist_to_workspace:
+          root: /home/circleci/source
+          paths:
+            - artifact-backend.tar.gz
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -276,7 +280,7 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             ls -la
             echo "deploy source to s3"
-            aws s3 sync dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete
+            aws s3 cp ./dist "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
