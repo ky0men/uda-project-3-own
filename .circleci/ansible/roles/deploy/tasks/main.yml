@@ -9,7 +9,7 @@
 
 - name: "Copy compressed backend folder"
   copy:
-    src: "/home/circleci/artifact.tar.gz"
+    src: "/root/project/artifact.tar.gz"
     dest: "/srv/stg"
 
 - name: "Extract backend to folder"
