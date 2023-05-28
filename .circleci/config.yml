@@ -357,6 +357,8 @@ jobs:
       - image: python:3.9.0-alpine
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Install dependencies
           working_directory: /tmp
@@ -366,14 +368,18 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export API_URL="http://44.199.167.151:3030"
+            cd .circleci/ansible/
+            ls -la
+            cat inventory.txt
+            export BACKEND_IP=$(sed -n '2p' inventory.txt)
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "$API_URL"
       - run:
           name: Backend smoke test.
           command: |
             if curl "$API_URL/api/status" | grep "ok"
             then
-              return 0
+              return 1
             else
               return 1
             fi
