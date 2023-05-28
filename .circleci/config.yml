@@ -300,16 +300,25 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
-            npm run start
             cd ..
             ## Zip the directory
             tar -C backend -czvf artifact.tar.gz .
+            mkdir --parents /home/circleci/source
+            cp artifact.tar.gz /home/circleci/source/artifact.tar.gz
+            cd /home/circleci/source/
+            ls -la
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+      - run:
+          name: Verify SSH host
+          command: |
+          cd /home/circleci/source
+          ls -la 
+          ssh-keyscan -H 44.199.167.151 >> ~/.ssh/known_hosts
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
