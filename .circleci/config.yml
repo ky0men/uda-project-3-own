@@ -190,7 +190,7 @@ jobs:
 
             cd .circleci/ansible/
             ls -la
-            echo cat inventory.txt
+            cat inventory.txt
       - run:
           name: install gzip
           command: |
