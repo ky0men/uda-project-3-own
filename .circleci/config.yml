@@ -186,11 +186,11 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text >> .circleci/ansible/inventory
+              --output text >> .circleci/ansible/inventory.txt
             
             cd .circleci/ansible/
             ls -la 
-            cat .circleci/ansible/inventory
+            cat .circleci/ansible/inventory.txt
       - run:
           name: install gzip
           command: |
