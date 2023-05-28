@@ -190,7 +190,8 @@ jobs:
 
             cd .circleci/ansible/
             ls -la 
-            cat backend-ip.txt >> .circleci/ansible/inventory.txt
+            cat backend-ip.txt >> inventory.txt
+            cat inventory.txt
       - run:
           name: install gzip
           command: |
