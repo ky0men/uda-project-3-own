@@ -92,7 +92,7 @@ jobs:
             cd /home/circleci/source/
             ls -la
       - persist_to_workspace:
-          root: /home/circleci/source
+          root: .
           paths:
             - artifact.tar.gz
             - .circleci/ansible/inventory.txt
@@ -309,7 +309,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["89:eb:ff:65:75:bb:e3:59:82:fd:1d:70:58:81:39:0c"]
       - attach_workspace:
-          at: /home/circleci/source
+          at: .
       - run:
           name: Install dependencies
           working_directory: /tmp
