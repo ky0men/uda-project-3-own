@@ -190,7 +190,7 @@ jobs:
 
             cd .circleci/ansible/
             ls -la 
-            cat backend-ip.txt
+            cat backend-ip.txt >> .circleci/ansible/inventory.txt
       - run:
           name: install gzip
           command: |
@@ -270,6 +270,7 @@ jobs:
           name: Get backend url
           command: |
             cd .circleci/ansible/
+            ls -la
             cat backend-ip.txt
             export BACKEND_IP=$(cat backend-ip.txt)
             export API_URL="http://${BACKEND_IP}:3030"
