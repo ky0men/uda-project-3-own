@@ -1,2 +1,0 @@
-https://github.com/ky0men/uda-project-3-own
-http://udapeople-f8774b0.s3-website-us-east-1.amazonaws.com/#/employees
