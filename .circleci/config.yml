@@ -341,6 +341,7 @@ jobs:
           name: Build backend
           command: |
             cd backend
+            cat .env
             npm install
             npm run build
             cd ..
