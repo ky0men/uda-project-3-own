@@ -323,6 +323,21 @@ jobs:
             aws --version
             npm install pm2
       - run:
+          name: Save all db varibles in env file
+          command: |
+            cd backend
+            touch .env
+            echo NODE_ENV=local >> .env
+            echo TYPEORM_HOST=database-2.cicvv8ubmjyc.us-east-1.rds.amazonaws.com >> .env
+            echo TYPEORM_CONNECTION=postgres >> .env
+            echo TYPEORM_DATABASE=postgres >> .env
+            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> .env
+            echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> .env
+            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> .env
+            echo TYPEORM_PASSWORD=password >> .env
+            echo TYPEORM_PORT=5432 >> .env
+            TYPEORM_USERNAME=postgres >> .env
+      - run:
           name: Build backend
           command: |
             cd backend
