@@ -437,9 +437,9 @@ jobs:
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=udapeople
-      - revert-migrations:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
+      # - revert-migrations:
+      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
+      #     when: on_fail
 
 # cleanup:
 #   docker:
