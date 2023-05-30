@@ -30,7 +30,8 @@ commands:
           name: Revert migrations
           command: |
             SUCCESS=$(curl https://kvdb.io/M8NTh9kT327fA6ombuZZS/migration_${CIRCLE_WORKFLOW_ID:0:7})
-            if $SUCCESS == 'success'
+            echo $SUCCESS
+            if [ "$SUCCESS" == "success" ];
             then
               echo "------------------ Confirm to revert -------------" 
               cd ~/project/backend
