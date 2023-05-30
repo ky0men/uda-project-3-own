@@ -401,7 +401,7 @@ jobs:
             echo "$API_URL/api/status"
             if curl "$API_URL/api/status" | grep "ok"
             then
-              return 1
+              return 0
             else
               return 1
             fi
@@ -412,7 +412,7 @@ jobs:
             echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
-              return 1
+              return 0
             else
               return 1
             fi
@@ -462,15 +462,21 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                       --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}"
-            if [[ "${OldWorkflowID}" =~ "${STACKS[@]}"  ]]
-            then
-              echo "--------------- Delete confirm----------------"
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-            else
-              echo "--------------- Not thing to delete ----------"
-            fi
+            for stack in ${STACKS[@]}
+              do
+                if [[ ! "${OldWorkflowID}" =~ "$stack" ]]
+                then
+                  STR = "$stack"
+                  ID_NUM = ${STR:(-7)}
+                  echo "ID_NUM  ${ID_NUM}" 
+                  echo "--------------- Delete confirm----------------"
+                  aws s3 rm "s3://udapeople-${ID_NUM}" --recursive
+                  aws cloudformation delete-stack --stack-name "$stack"
+                  aws cloudformation delete-stack --stack-name "$stack"
+                else
+                  echo "--------------- Not thing to delete ----------"
+                fi
+              done
 
 workflows:
   default:
