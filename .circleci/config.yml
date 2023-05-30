@@ -470,11 +470,13 @@ jobs:
                   echo $STR
                   export ID_NUM=${STR: -7}
                   echo "ID_NUM ${ID_NUM}"
-                  echo "--------------- Delete confirm----------------"
-                  aws s3 rm "s3://udapeople-${ID_NUM}" --recursive
                   aws cloudformation delete-stack --stack-name "$stack"
-                else
-                  echo "--------------- Not thing to delete ----------"
+                  if aws s3 ls "s3://udapeople-${ID_NUM}" 2>&1 | grep -q 'NoSuchBucket';
+                  then
+                      echo "Bucket does not exist"
+                  else
+                      aws s3 rm "s3://udapeople-${ID_NUM}" --recursive
+                  fi
                 fi
               done
 
