@@ -467,11 +467,10 @@ jobs:
                 if [[ ! "${OldWorkflowID}" =~ "$stack" ]]
                 then
                   STR = "$stack"
-                  ID_NUM = ${STR:(-7)}
+                  ID_NUM = "${STR:(-7)}"
                   echo "ID_NUM  ${ID_NUM}" 
                   echo "--------------- Delete confirm----------------"
                   aws s3 rm "s3://udapeople-${ID_NUM}" --recursive
-                  aws cloudformation delete-stack --stack-name "$stack"
                   aws cloudformation delete-stack --stack-name "$stack"
                 else
                   echo "--------------- Not thing to delete ----------"
