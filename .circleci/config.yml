@@ -36,7 +36,7 @@ commands:
               echo "------------------ Confirm to revert -------------" 
               cd ~/project/backend
               npm install
-              npm run migration:revert
+              npm run migrations:revert
             else
               echo "--------------- No migrations to revert ----------"  
             fi
